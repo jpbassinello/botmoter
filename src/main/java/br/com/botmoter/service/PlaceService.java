@@ -1,7 +1,7 @@
-package br.com.botmotor.service;
+package br.com.botmoter.service;
 
-import br.com.botmotor.bot.TipoLocal;
-import br.com.botmotor.model.Place;
+import br.com.botmoter.bot.TipoLocal;
+import br.com.botmoter.model.Place;
 import se.walkercrou.places.GooglePlaces;
 import se.walkercrou.places.Param;
 

@@ -1,8 +1,8 @@
-package br.com.botmotor;
+package br.com.botmoter;
 
-import br.com.botmotor.bot.*;
-import br.com.botmotor.service.BotmotorClient;
-import br.com.botmotor.service.UrlShortnerService;
+import br.com.botmoter.bot.*;
+import br.com.botmoter.service.BotmotorClient;
+import br.com.botmoter.service.UrlShortnerService;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -20,7 +20,6 @@ public class Main {
 	private static final Set<Long> IDS = new HashSet<>();
 	private static final boolean THA_MODE = true;
 	private static MainBot BOT = new MainBot();
-	private static ThaBot THA_BOT = new ThaBot();
 	// TODO: alterar antes da apresentação
 	private static int LAST_MESSAGE = 1358;
 
@@ -50,11 +49,7 @@ public class Main {
 					continue;
 				}
 				List<Response> rs;
-				if (147976380 == m.getUserId() && THA_MODE) {
-					rs = THA_BOT.process(m);
-				} else {
-					rs = BOT.process(m);
-				}
+				rs = BOT.process(m);
 				if (rs == null) {
 					continue;
 				}

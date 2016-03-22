@@ -1,4 +1,4 @@
-package br.com.botmotor.model;
+package br.com.botmoter.model;
 
 import se.walkercrou.places.Status;
 

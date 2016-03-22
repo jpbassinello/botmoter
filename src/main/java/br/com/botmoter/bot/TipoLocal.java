@@ -1,4 +1,4 @@
-package br.com.botmotor.bot;
+package br.com.botmoter.bot;
 
 import se.walkercrou.places.Types;
 

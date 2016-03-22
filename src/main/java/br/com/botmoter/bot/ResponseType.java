@@ -1,4 +1,4 @@
-package br.com.botmotor.bot;
+package br.com.botmoter.bot;
 
 /**
  * @author "<a href='jpbassinello@gmail.com'>João Paulo Bassinello</a>"

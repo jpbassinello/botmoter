@@ -1,4 +1,4 @@
-package br.com.botmotor.bot;
+package br.com.botmoter.bot;
 
 /**
  * Created by luan on 3/19/16.

@@ -1,7 +1,7 @@
-package br.com.botmotor.bot;
+package br.com.botmoter.bot;
 
-import br.com.botmotor.model.Place;
-import br.com.botmotor.service.PlaceService;
+import br.com.botmoter.model.Place;
+import br.com.botmoter.service.PlaceService;
 
 import java.util.Arrays;
 import java.util.HashMap;
