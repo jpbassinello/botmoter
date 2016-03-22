@@ -1,4 +1,4 @@
-package br.com.botmoter.bot;
+package br.com.botmoter.hackathon.bot.model;
 
 public final class MessageLocation extends Message {
 

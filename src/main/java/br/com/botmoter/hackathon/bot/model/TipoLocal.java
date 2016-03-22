@@ -1,4 +1,4 @@
-package br.com.botmoter.bot;
+package br.com.botmoter.hackathon.bot.model;
 
 import se.walkercrou.places.Types;
 

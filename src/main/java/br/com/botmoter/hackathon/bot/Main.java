@@ -1,6 +1,9 @@
-package br.com.botmoter;
+package br.com.botmoter.hackathon.bot;
 
-import br.com.botmoter.bot.*;
+import br.com.botmoter.hackathon.bot.model.Message;
+import br.com.botmoter.hackathon.bot.model.MessageLocation;
+import br.com.botmoter.hackathon.bot.model.MessageText;
+import br.com.botmoter.hackathon.bot.model.Response;
 import br.com.botmoter.service.UrlShortnerService;
 import br.com.botmoter.telegram.TelegramService;
 import com.google.gson.JsonArray;

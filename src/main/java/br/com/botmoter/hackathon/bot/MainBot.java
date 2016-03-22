@@ -1,5 +1,6 @@
-package br.com.botmoter.bot;
+package br.com.botmoter.hackathon.bot;
 
+import br.com.botmoter.hackathon.bot.model.*;
 import br.com.botmoter.model.Place;
 import br.com.botmoter.service.PlaceService;
 

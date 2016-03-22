@@ -1,4 +1,4 @@
-package br.com.botmoter.bot;
+package br.com.botmoter.hackathon.bot.model;
 
 /**
  * Created by luan on 3/19/16.

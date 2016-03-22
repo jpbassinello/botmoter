@@ -1,6 +1,6 @@
 package br.com.botmoter.service;
 
-import br.com.botmoter.bot.TipoLocal;
+import br.com.botmoter.hackathon.bot.model.TipoLocal;
 import br.com.botmoter.model.Place;
 import se.walkercrou.places.GooglePlaces;
 import se.walkercrou.places.Param;
