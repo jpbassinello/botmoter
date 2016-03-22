@@ -1,4 +1,4 @@
-package br.com.botmoter.service;
+package br.com.botmoter.telegram;
 
 import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.ClientResponse;
@@ -13,31 +13,30 @@ import javax.ws.rs.HttpMethod;
  * @author "<a href='jpbassinello@gmail.com'>João Paulo Bassinello</a>"
  */
 @Encoded
-public final class BotmotorClient {
+public final class TelegramClient {
 
 	private static final String BASE_URL = "https://api.telegram.org/";
 	private static final String BOT_TOKEN =
 			"bot198737376:AAFrs1DR7fBwsYvKj_jDW6lZvwlOULFE9Y0";
-	private static final String DEFAULT_CHARSET = "UTF-8";
-	private static final int TIMEOUT = 20000;
+	private static final int TIMEOUT = 10000;
 	private String endpoint;
 	private String HTTP_METHOD = HttpMethod.GET;
 	private String getParameters;
 
-	public BotmotorClient() {
+	TelegramClient() {
 	}
 
-	public BotmotorClient withEndpoint(String endpoint) {
+	TelegramClient withEndpoint(String endpoint) {
 		this.endpoint = endpoint;
 		return this;
 	}
 
-	public BotmotorClient withGetParameters(String parameters) {
+	TelegramClient withGetParameters(String parameters) {
 		this.getParameters = parameters;
 		return this;
 	}
 
-	public <T> T getSingleResult(Class<T> returnType) {
+	<T> T getSingleResult(Class<T> returnType) {
 		ClientResponse response = makeRequest();
 		if (returnType == null) {
 			return null;
@@ -45,6 +44,10 @@ public final class BotmotorClient {
 		T readEntity = response.getEntity(returnType);
 		reset();
 		return readEntity;
+	}
+
+	void call() {
+		getSingleResult(Object.class);
 	}
 
 	private void reset() {
