@@ -11,10 +11,12 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class TelegramRestController {
 
+	public static final String UPDATES_REST_PATH = "/aokkow23SSwqQLLzqW/updates";
+
 	private static final String BOT_TOKEN =
 			"bot157015122:AAELqgI6HOOzmKQxuyZYu6cDX3hFnKnUmNc";
 
-	@RequestMapping(path = "/echo/{message}", method = RequestMethod.GET)
+	@RequestMapping(path = UPDATES_REST_PATH, method = RequestMethod.GET)
 	public Message echo(@PathVariable("message") String message) {
 		return new Message(message);
 	}

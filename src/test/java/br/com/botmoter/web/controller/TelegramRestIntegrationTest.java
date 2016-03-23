@@ -11,7 +11,7 @@ public class TelegramRestIntegrationTest {
 
 	@Test
 	public void firstEchoTest() {
-		RestAssured.get("/echo/hello").then().assertThat().body("message",
-				Matchers.equalTo("hello"));
+		RestAssured.get(TelegramRestController.UPDATES_REST_PATH).then()
+				.assertThat().body("message", Matchers.equalTo("hello"));
 	}
 }

@@ -1,5 +1,8 @@
 package br.com.botmoter.telegram;
 
+import br.com.botmoter.telegram.model.Update;
+import org.codehaus.jackson.map.ObjectMapper;
+
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
@@ -13,6 +16,25 @@ public class TelegramService {
 
 	public TelegramService(String botToken) {
 		this.botToken = botToken;
+	}
+
+	public static void main(String[] args) {
+		String s = "{\"update_id\":344901419, \"message\":{\"message_id\":7," +
+				"\"from\":{\"id\":192468144,\"first_name\":\"Lucas\"," +
+				"\"last_name\":\"Laurindo dos Santos\"}," +
+				"\"chat\":{\"id\":192468144," +
+				"\"first_name\":\"Lucas\",\"last_name\":\"Laurindo dos " +
+				"Santos\",\"type\":\"private\"}," +
+				"\"date\":1458403367,\"location\":{\"longitude\":-47.047745," +
+				"\"latitude\":-22.893990}}}";
+
+		ObjectMapper objectMapper = new ObjectMapper();
+		try {
+			final Update update = objectMapper.readValue(s, Update.class);
+			System.out.println(update);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 
 	public void sendPhoto(long chatId,
