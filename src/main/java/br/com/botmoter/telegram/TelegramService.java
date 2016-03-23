@@ -18,7 +18,7 @@ public class TelegramService {
 		this.botToken = botToken;
 	}
 
-//	public static void main(String[] args) {
+	//	public static void main(String[] args) {
 	public void test() {
 		String s = "{\"update_id\":344901419, \"message\":{\"message_id\":7," +
 				"\"from\":{\"id\":192468144,\"first_name\":\"Lucas\"," +
