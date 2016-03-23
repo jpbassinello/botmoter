@@ -1,4 +1,4 @@
-package br.com.botmoter.web.controller;
+package br.com.botmoter.web;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
