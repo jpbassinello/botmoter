@@ -19,11 +19,13 @@ public class Main {
 
 	private static final Set<Long> IDS = new HashSet<>();
 	private static MainBot BOT = new MainBot();
-	private static TelegramService telegramService = new TelegramService();
+	private static TelegramService telegramService = new TelegramService
+			("bot198737376:AAFrs1DR7fBwsYvKj_jDW6lZvwlOULFE9Y0");
 	// TODO: alterar antes da apresentação
 	private static int LAST_MESSAGE = 1358;
 
-	public static void main(String[] args) throws Exception {
+	// TODO: não pode ser main, pois conflita com o spring boot
+	public void run() throws Exception {
 		while (true) {
 			String updates = telegramService.getUpdates(LAST_MESSAGE);
 			JsonObject obj = parse(updates);

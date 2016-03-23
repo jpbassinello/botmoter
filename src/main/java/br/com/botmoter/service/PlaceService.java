@@ -19,30 +19,6 @@ public class PlaceService {
 	private static final double DEFAULT_RADIUS = 5000D;
 	private static final int DEFAULT_NUMBER_OF_RESULTS = 10;
 
-	public static void main(String[] args) {
-		final PlaceService placeService = new PlaceService();
-
-		// teste1: bares by lat long
-		final double latitude = -22.893990D;
-		final double longitude = -47.047745D;
-
-		System.out.println("================= teste1: bares by lat long");
-		placeService.printInSysOut(placeService.getPlaces(latitude, longitude,
-				TipoLocal.BARES));
-
-		// teste2: restaurants by address
-		String address = "Rua Adelino Martins, 500, Campinas - SP";
-		System.out.println("\n\n================= teste2: restaurants by " +
-				"address");
-		placeService.printInSysOut(placeService.getPlaces(address, TipoLocal
-				.RESTAURANTES));
-	}
-
-	private void printInSysOut(List<Place> places) {
-		System.out.print(places.stream().map(Place::toString).collect
-				(Collectors.joining("\n\n")));
-	}
-
 	public List<Place> getPlaces(double latitude, double longitude,
 			TipoLocal tipoLocal) {
 		GooglePlaces client = new GooglePlaces(GOOGLE_KEY);

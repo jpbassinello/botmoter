@@ -16,14 +16,14 @@ import javax.ws.rs.HttpMethod;
 public final class TelegramClient {
 
 	private static final String BASE_URL = "https://api.telegram.org/";
-	private static final String BOT_TOKEN =
-			"bot198737376:AAFrs1DR7fBwsYvKj_jDW6lZvwlOULFE9Y0";
 	private static final int TIMEOUT = 10000;
+	private final String botToken;
 	private String endpoint;
 	private String HTTP_METHOD = HttpMethod.GET;
 	private String getParameters;
 
-	TelegramClient() {
+	TelegramClient(String botToken) {
+		this.botToken = botToken;
 	}
 
 	TelegramClient withEndpoint(String endpoint) {
@@ -56,7 +56,7 @@ public final class TelegramClient {
 	}
 
 	private ClientResponse makeRequest() {
-		String url = BASE_URL + BOT_TOKEN + endpoint;
+		String url = BASE_URL + botToken + endpoint;
 		if (getParameters != null) {
 			url += getParameters;
 		}

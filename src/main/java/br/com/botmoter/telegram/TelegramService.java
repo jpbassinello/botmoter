@@ -9,9 +9,15 @@ import java.net.URLEncoder;
  */
 public class TelegramService {
 
+	private final String botToken;
+
+	public TelegramService(String botToken) {
+		this.botToken = botToken;
+	}
+
 	public void sendPhoto(long chatId,
 			String photoUrl) throws UnsupportedEncodingException {
-		TelegramClient client = new TelegramClient().withEndpoint
+		TelegramClient client = new TelegramClient(botToken).withEndpoint
 				("/sendPhoto").withGetParameters("?chat_id=" + chatId +
 				"&photo=" + URLEncoder.encode(photoUrl, "UTF-8"));
 
@@ -19,7 +25,7 @@ public class TelegramService {
 	}
 
 	public void sendLocation(long chatId, double latitude, double longitude) {
-		TelegramClient client = new TelegramClient().withEndpoint
+		TelegramClient client = new TelegramClient(botToken).withEndpoint
 				("/sendLocation").withGetParameters("?chat_id=" + chatId +
 				"&latitude=" + latitude + "&longitude=" + longitude);
 
@@ -27,7 +33,7 @@ public class TelegramService {
 	}
 
 	public void sendResponse(long chatId, String text) throws IOException {
-		TelegramClient client = new TelegramClient().withEndpoint
+		TelegramClient client = new TelegramClient(botToken).withEndpoint
 				("/sendmessage").withGetParameters("?chat_id=" + chatId +
 				"&text=" + (text == null ? "null" : URLEncoder.encode(text,
 				"UTF-8")));
@@ -36,7 +42,7 @@ public class TelegramService {
 	}
 
 	public String getUpdates(Integer offset) {
-		TelegramClient client = new TelegramClient().withEndpoint
+		TelegramClient client = new TelegramClient(botToken).withEndpoint
 				("/getupdates");
 		if (offset != null) {
 			client = client.withGetParameters("?offset=" + offset);
