@@ -87,4 +87,17 @@ public class Message {
 	public void setCaption(String caption) {
 		this.caption = caption;
 	}
+
+	@Override
+	public String toString() {
+		return "Message{" +
+				"messageId=" + messageId +
+				", from=" + from +
+				", dateTime=" + dateTime +
+				", chat=" + chat +
+				", text='" + text + '\'' +
+				", location=" + location +
+				", caption='" + caption + '\'' +
+				'}';
+	}
 }

@@ -31,4 +31,12 @@ public class Location {
 	public void setLongitude(BigDecimal longitude) {
 		this.longitude = longitude;
 	}
+
+	@Override
+	public String toString() {
+		return "Location{" +
+				"latitude=" + latitude +
+				", longitude=" + longitude +
+				'}';
+	}
 }

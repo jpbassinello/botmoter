@@ -69,4 +69,16 @@ public class Chat {
 	public void setUserName(String userName) {
 		this.userName = userName;
 	}
+
+	@Override
+	public String toString() {
+		return "Chat{" +
+				"id=" + id +
+				", type='" + type + '\'' +
+				", title='" + title + '\'' +
+				", firstName='" + firstName + '\'' +
+				", lastName='" + lastName + '\'' +
+				", userName='" + userName + '\'' +
+				'}';
+	}
 }

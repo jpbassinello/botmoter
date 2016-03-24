@@ -49,4 +49,14 @@ public class User {
 	public void setUserName(String userName) {
 		this.userName = userName;
 	}
+
+	@Override
+	public String toString() {
+		return "User{" +
+				"id=" + id +
+				", firstName='" + firstName + '\'' +
+				", lastName='" + lastName + '\'' +
+				", userName='" + userName + '\'' +
+				'}';
+	}
 }
