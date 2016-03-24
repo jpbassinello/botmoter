@@ -45,6 +45,7 @@
 	<logger name="br.com.botmoter" level="INFO"/>
 	<logger name="net.sf.ehcache" level="WARN"/>
 	<logger name="org.apache" level="WARN"/>
+	<logger name="com.jayway" level="WARN"/>
 	<logger name="org.springframework" level="WARN"/>
 	<logger name="com.gargoylesoftware" level="OFF"/>
 
