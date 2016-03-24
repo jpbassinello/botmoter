@@ -19,8 +19,8 @@ public class Main {
 
 	private static final Set<Long> IDS = new HashSet<>();
 	private static MainBot BOT = new MainBot();
-	private static TelegramService telegramService = new TelegramService
-			("bot198737376:AAFrs1DR7fBwsYvKj_jDW6lZvwlOULFE9Y0");
+	// TODO: inject the service here
+	private static TelegramService telegramService = new TelegramService();
 	// TODO: alterar antes da apresentação
 	private static int LAST_MESSAGE = 1358;
 

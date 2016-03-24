@@ -11,5 +11,7 @@ public class BotmoterApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(BotmoterApplication.class, args);
+
+
 	}
 }
