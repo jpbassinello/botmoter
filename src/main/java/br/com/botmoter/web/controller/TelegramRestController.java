@@ -38,10 +38,13 @@ public class TelegramRestController {
 
 	@RequestMapping(path = UPDATES_REST_PATH, method = RequestMethod.POST)
 	public Update updates(@RequestBody String messageJson) {
+		LOGGER.info("Receiving a update from Telegram {}" + messageJson);
 		ObjectMapper objectMapper = new ObjectMapper();
 		try {
 			final Update update = objectMapper.readValue(messageJson, Update.class);
-			asyncProcessorService.proccessUpdate(update);
+			if (properties.isProduction()) {
+				asyncProcessorService.processUpdate(update);
+			}
 			// even the Telegram bot doesn´t need it, return the object
 			// to be validated in Integration Test
 			return update;

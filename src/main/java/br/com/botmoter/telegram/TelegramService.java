@@ -40,8 +40,7 @@ public class TelegramService {
 		TelegramClient client = new TelegramClient(properties.getBotToken())
 				.withEndpoint("/sendmessage").withGetParameters("?chat_id=" +
 				chatId +
-				"&text=" + (text == null ? "null" : URLEncoder.encode(text,
-						"UTF-8")));
+				"&text=" + URLEncoder.encode(text, "UTF-8"));
 
 		client.call();
 	}

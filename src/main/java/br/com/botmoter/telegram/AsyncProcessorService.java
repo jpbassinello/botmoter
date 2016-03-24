@@ -28,15 +28,17 @@ public class AsyncProcessorService {
 	private TelegramService telegramService;
 
 	@Async
-	public void proccessUpdate(Update update) {
+	public void processUpdate(Update update) {
 		try {
-			proccessIt(update);
+			LOGGER.info("Start Processing update {}", update);
+			processIt(update);
+			LOGGER.info("End Processing update {}", update);
 		} catch (Exception e) {
 			LOGGER.warn("Unexpected error while processing update {}", update, e);
 		}
 	}
 
-	private void proccessIt(Update update) throws IOException {
+	private void processIt(Update update) throws IOException {
 		final int chatId = update.getMessage().getChat().getId();
 		final Location location = update.getMessage().getLocation();
 		if (location != null) {
