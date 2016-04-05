@@ -10,7 +10,7 @@
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<java.version>1.8</java.version>
+		<java.version>1.7</java.version>
 		<slf4j.version>1.7.16</slf4j.version>
 	</properties>
 
@@ -38,7 +38,8 @@
 				</resources>
 			</build>
 			<properties>
-				<integrated>false</integrated>
+				<unit-tests.skip>false</unit-tests.skip>
+				<integration-tests.skip>false</integration-tests.skip>
 			</properties>
 		</profile>
 		<profile>
@@ -55,7 +56,8 @@
 				</resources>
 			</build>
 			<properties>
-				<integrated>false</integrated>
+				<unit-tests.skip>false</unit-tests.skip>
+				<integration-tests.skip>true</integration-tests.skip>
 			</properties>
 		</profile>
 	</profiles>
@@ -129,6 +131,11 @@
 			<artifactId>jul-to-slf4j</artifactId>
 			<version>${slf4j.version}</version>
 		</dependency>
+		<dependency>
+			<groupId>com.google.guava</groupId>
+			<artifactId>guava</artifactId>
+			<version>19.0</version>
+		</dependency>
 		<!-- test -->
 		<dependency>
 			<groupId>junit</groupId>
@@ -156,8 +163,8 @@
 				<artifactId>maven-compiler-plugin</artifactId>
 				<version>3.1</version>
 				<configuration>
-					<source>1.8</source>
-					<target>1.8</target>
+					<source>1.7</source>
+					<target>1.7</target>
 					<encoding>UTF-8</encoding>
 				</configuration>
 			</plugin>
@@ -169,6 +176,7 @@
 					<excludes>
 						<exclude>**/*IntegrationTest.java</exclude>
 					</excludes>
+					<skipTests>${unit-tests.skip}</skipTests>
 				</configuration>
 			</plugin>
 			<plugin>
@@ -208,6 +216,9 @@
 						</goals>
 					</execution>
 				</executions>
+				<configuration>
+					<skipTests>${integration-tests.skip}</skipTests>
+				</configuration>
 			</plugin>
 		</plugins>
 	</build>

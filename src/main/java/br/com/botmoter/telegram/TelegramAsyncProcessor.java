@@ -5,27 +5,44 @@ import br.com.botmoter.model.Place;
 import br.com.botmoter.service.GooglePlacesApiService;
 import br.com.botmoter.telegram.model.Location;
 import br.com.botmoter.telegram.model.Update;
+import br.com.botmoter.web.bean.Properties;
+import br.com.botmoter.web.controller.TelegramRestController;
+import com.google.common.base.Function;
+import com.google.common.base.Joiner;
+import com.google.common.collect.FluentIterable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 
+import javax.annotation.PostConstruct;
 import java.io.IOException;
 import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * @author "<a href='jpbassinello@gmail.com'>João Paulo Bassinello</a>"
  */
-@Service
-public class AsyncProcessorService {
+@Component
+public class TelegramAsyncProcessor {
 
-	private static final Logger LOGGER = LoggerFactory.getLogger(AsyncProcessorService.class);
+	private static final Logger LOGGER = LoggerFactory
+			.getLogger(TelegramAsyncProcessor.class);
 	private final GooglePlacesApiService googlePlacesApiService = new GooglePlacesApiService();
 
 	@Autowired
 	private TelegramService telegramService;
+
+	@Autowired
+	private Properties properties;
+
+	@PostConstruct
+	public void init() {
+		if (properties.isProduction()) {
+			new TelegramService()
+					.setWebhook(properties.getAppUrl() + TelegramRestController.UPDATES_REST_PATH);
+		}
+	}
 
 	@Async
 	public void processUpdate(Update update) {
@@ -42,10 +59,17 @@ public class AsyncProcessorService {
 		final int chatId = update.getMessage().getChat().getId();
 		final Location location = update.getMessage().getLocation();
 		if (location != null) {
-			final List<Place> places = googlePlacesApiService.getPlaces(location.getLatitude()
-					.doubleValue(), location.getLongitude().doubleValue(), LocationType.BARS);
+			final List<Place> places = googlePlacesApiService
+					.getPlaces(location.getLatitude().doubleValue(),
+							location.getLongitude().doubleValue(), LocationType.BARS);
 			String msg = "Achei alguns lugares: \n";
-			msg += places.stream().map(Place::getName).collect(Collectors.joining(", "));
+			msg += Joiner.on(", ")
+					.join(FluentIterable.from(places).transform(new Function<Place, String>() {
+						@Override
+						public String apply(Place input) {
+							return input.getName();
+						}
+					}));
 			telegramService.sendResponse(chatId, msg);
 		}
 		String name = update.getMessage().getFrom().getFirstName();

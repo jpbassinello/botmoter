@@ -1,7 +1,6 @@
 package br.com.botmoter.web.controller;
 
-import br.com.botmoter.telegram.AsyncProcessorService;
-import br.com.botmoter.telegram.TelegramService;
+import br.com.botmoter.telegram.TelegramAsyncProcessor;
 import br.com.botmoter.telegram.model.Update;
 import br.com.botmoter.web.bean.Properties;
 import org.codehaus.jackson.map.ObjectMapper;
@@ -13,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.annotation.PostConstruct;
 import java.io.IOException;
 
 /**
@@ -24,17 +22,12 @@ public class TelegramRestController {
 
 	public static final String UPDATES_REST_PATH = "/aokkow23SSwqQLLzqW/updates";
 	private static final Logger LOGGER = LoggerFactory.getLogger(TelegramRestController.class);
+
+	@Autowired
+	private TelegramAsyncProcessor telegramAsyncProcessor;
+
 	@Autowired
 	private Properties properties;
-	@Autowired
-	private AsyncProcessorService asyncProcessorService;
-
-	@PostConstruct
-	public void init() {
-		if (properties.isProduction()) {
-			new TelegramService().setWebhook(properties.getAppUrl() + UPDATES_REST_PATH);
-		}
-	}
 
 	@RequestMapping(path = UPDATES_REST_PATH, method = RequestMethod.POST)
 	public Update updates(@RequestBody String messageJson) {
@@ -43,7 +36,7 @@ public class TelegramRestController {
 		try {
 			final Update update = objectMapper.readValue(messageJson, Update.class);
 			if (properties.isProduction()) {
-				asyncProcessorService.processUpdate(update);
+				telegramAsyncProcessor.processUpdate(update);
 			}
 			// even the Telegram bot doesn´t need it, return the object
 			// to be validated in Integration Test

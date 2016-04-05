@@ -2,12 +2,14 @@ package br.com.botmoter.service;
 
 import br.com.botmoter.model.LocationType;
 import br.com.botmoter.model.Place;
+import com.google.common.base.Function;
+import com.google.common.base.Joiner;
+import com.google.common.collect.FluentIterable;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * @author "<a href='jpbassinello@gmail.com'>João Paulo Bassinello</a>"
@@ -34,7 +36,13 @@ public class PlaceServiceTest {
 	}
 
 	private void printInSysOut(List<Place> places) {
-		LOGGER.info(places.stream().map(Place::toString).collect(Collectors.joining("\n\n")));
+		LOGGER.info(Joiner.on("\n\n")
+				.join(FluentIterable.from(places).transform(new Function<Place, String>() {
+					@Override
+					public String apply(Place input) {
+						return input.toString();
+					}
+				})));
 	}
 
 }
