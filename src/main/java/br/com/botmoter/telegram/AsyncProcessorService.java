@@ -1,8 +1,8 @@
 package br.com.botmoter.telegram;
 
-import br.com.botmoter.hackathon.bot.model.TipoLocal;
+import br.com.botmoter.model.LocationType;
 import br.com.botmoter.model.Place;
-import br.com.botmoter.service.PlaceService;
+import br.com.botmoter.service.GooglePlacesApiService;
 import br.com.botmoter.telegram.model.Location;
 import br.com.botmoter.telegram.model.Update;
 import org.slf4j.Logger;
@@ -22,7 +22,7 @@ import java.util.stream.Collectors;
 public class AsyncProcessorService {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(AsyncProcessorService.class);
-	private final PlaceService placeService = new PlaceService();
+	private final GooglePlacesApiService googlePlacesApiService = new GooglePlacesApiService();
 
 	@Autowired
 	private TelegramService telegramService;
@@ -42,8 +42,8 @@ public class AsyncProcessorService {
 		final int chatId = update.getMessage().getChat().getId();
 		final Location location = update.getMessage().getLocation();
 		if (location != null) {
-			final List<Place> places = placeService.getPlaces(location.getLatitude().doubleValue()
-					, location.getLongitude().doubleValue(), TipoLocal.BARES);
+			final List<Place> places = googlePlacesApiService.getPlaces(location.getLatitude()
+					.doubleValue(), location.getLongitude().doubleValue(), LocationType.BARS);
 			String msg = "Achei alguns lugares: \n";
 			msg += places.stream().map(Place::getName).collect(Collectors.joining(", "));
 			telegramService.sendResponse(chatId, msg);

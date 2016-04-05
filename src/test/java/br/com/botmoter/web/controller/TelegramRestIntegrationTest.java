@@ -8,6 +8,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.boot.test.WebIntegrationTest;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 /**
@@ -16,6 +17,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(BotmoterApplication.class)
 @WebIntegrationTest
+@ActiveProfiles("development")
 public class TelegramRestIntegrationTest {
 
 	private static final String BODY_WITH_TEXT = "{\"update_id\":344901420," +
