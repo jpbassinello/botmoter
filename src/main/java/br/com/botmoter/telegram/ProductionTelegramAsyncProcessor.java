@@ -29,7 +29,7 @@ public class ProductionTelegramAsyncProcessor implements TelegramProcessor {
 
 	private static final Logger LOGGER = Logger
 			.getLogger(ProductionTelegramAsyncProcessor.class.getName());
-	private static final String APP_BASE_URL = "http://localhost";
+	private static final String APP_BASE_URL = "https://botmoter.appspot.com";
 	private final GooglePlacesApiService googlePlacesApiService = new GooglePlacesApiService();
 
 	@Autowired
