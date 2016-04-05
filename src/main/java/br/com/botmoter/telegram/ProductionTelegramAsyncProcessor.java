@@ -5,7 +5,6 @@ import br.com.botmoter.model.Place;
 import br.com.botmoter.service.GooglePlacesApiService;
 import br.com.botmoter.telegram.model.Location;
 import br.com.botmoter.telegram.model.Update;
-import br.com.botmoter.web.bean.Properties;
 import br.com.botmoter.web.controller.TelegramRestController;
 import com.google.common.base.Function;
 import com.google.common.base.Joiner;
@@ -13,6 +12,7 @@ import com.google.common.collect.FluentIterable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Profile;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 
@@ -24,24 +24,20 @@ import java.util.List;
  * @author "<a href='jpbassinello@gmail.com'>João Paulo Bassinello</a>"
  */
 @Component
-public class TelegramAsyncProcessor {
+@Profile("production")
+public class ProductionTelegramAsyncProcessor implements TelegramProcessor {
 
 	private static final Logger LOGGER = LoggerFactory
-			.getLogger(TelegramAsyncProcessor.class);
+			.getLogger(ProductionTelegramAsyncProcessor.class);
+	private static final String APP_BASE_URL = "http://localhost";
 	private final GooglePlacesApiService googlePlacesApiService = new GooglePlacesApiService();
 
 	@Autowired
 	private TelegramService telegramService;
 
-	@Autowired
-	private Properties properties;
-
 	@PostConstruct
 	public void init() {
-		if (properties.isProduction()) {
-			new TelegramService()
-					.setWebhook(properties.getAppUrl() + TelegramRestController.UPDATES_REST_PATH);
-		}
+		new TelegramService().setWebhook(APP_BASE_URL + TelegramRestController.UPDATES_REST_PATH);
 	}
 
 	@Async
@@ -75,8 +71,7 @@ public class TelegramAsyncProcessor {
 		String name = update.getMessage().getFrom().getFirstName();
 		String msg = "Olá " + name + "! Eu ainda estou em fase de teste e não sei processar sua " +
 				"mensagem. Talvez você queira me enviar a sua localização para eu sugerir alguns" +
-				" " +
-				"lugares.";
+				" lugares.";
 
 		telegramService.sendResponse(chatId, msg);
 	}

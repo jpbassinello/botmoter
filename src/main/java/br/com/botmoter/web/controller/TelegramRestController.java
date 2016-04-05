@@ -1,8 +1,7 @@
 package br.com.botmoter.web.controller;
 
-import br.com.botmoter.telegram.TelegramAsyncProcessor;
+import br.com.botmoter.telegram.TelegramProcessor;
 import br.com.botmoter.telegram.model.Update;
-import br.com.botmoter.web.bean.Properties;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,10 +23,7 @@ public class TelegramRestController {
 	private static final Logger LOGGER = LoggerFactory.getLogger(TelegramRestController.class);
 
 	@Autowired
-	private TelegramAsyncProcessor telegramAsyncProcessor;
-
-	@Autowired
-	private Properties properties;
+	private TelegramProcessor telegramProcessor;
 
 	@RequestMapping(path = UPDATES_REST_PATH, method = RequestMethod.POST)
 	public Update updates(@RequestBody String messageJson) {
@@ -35,9 +31,7 @@ public class TelegramRestController {
 		ObjectMapper objectMapper = new ObjectMapper();
 		try {
 			final Update update = objectMapper.readValue(messageJson, Update.class);
-			if (properties.isProduction()) {
-				telegramAsyncProcessor.processUpdate(update);
-			}
+			telegramProcessor.processUpdate(update);
 			// even the Telegram bot doesn´t need it, return the object
 			// to be validated in Integration Test
 			return update;

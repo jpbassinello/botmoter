@@ -2,11 +2,9 @@ package br.com.botmoter.web.controller;
 
 import br.com.botmoter.web.BotmoterApplication;
 import com.jayway.restassured.RestAssured;
-import org.codehaus.jackson.map.ObjectMapper;
 import org.hamcrest.Matchers;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.springframework.boot.test.IntegrationTest;
 import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.boot.test.WebIntegrationTest;
 import org.springframework.test.context.ActiveProfiles;
@@ -18,6 +16,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(BotmoterApplication.class)
 @WebIntegrationTest
+@ActiveProfiles("development")
 public class TelegramRestIntegrationTest {
 
 	private static final String BODY_WITH_TEXT = "{\"update_id\":344901420," +
@@ -42,17 +41,15 @@ public class TelegramRestIntegrationTest {
 
 	@Test
 	public void updatesRestTest() {
-		ObjectMapper objectMapper = new ObjectMapper();
-
 		RestAssured.given().body(BODY_WITH_TEXT).post(TelegramRestController.UPDATES_REST_PATH)
 				.then().body("updateId", Matchers.equalTo(344901420)).body("message.from" + "" +
-				".userName", Matchers.equalTo("Felipe_Mir")).body("message.text", Matchers.equalTo
-				("Mensagem de Texto com ACENTUAÇÃO"));
+				".userName", Matchers.equalTo("Felipe_Mir"))
+				.body("message.text", Matchers.equalTo("Mensagem de Texto com ACENTUAÇÃO"));
 
-		RestAssured.given().body(BODY_WITH_LOCATION).post(TelegramRestController
-				.UPDATES_REST_PATH).then().body("updateId", Matchers.equalTo(344901419)).body
-				("message.messageId", Matchers.equalTo(7)).body("message.location.longitude",
-				Matchers.equalTo(-47.047745F)).body("message.location.latitude", Matchers.equalTo
-				(-22.893990F));
+		RestAssured.given().body(BODY_WITH_LOCATION).post(TelegramRestController.UPDATES_REST_PATH)
+				.then().body("updateId", Matchers.equalTo(344901419))
+				.body("message.messageId", Matchers.equalTo(7))
+				.body("message.location.longitude", Matchers.equalTo(-47.047745F))
+				.body("message.location.latitude", Matchers.equalTo(-22.893990F));
 	}
 }

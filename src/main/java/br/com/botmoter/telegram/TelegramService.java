@@ -14,40 +14,40 @@ import java.net.URLEncoder;
 @Component
 public class TelegramService {
 
+	private static final String BOT_TOKEN = "bot157015122:AAELqgI6HOOzmKQxuyZYu6cDX3hFnKnUmNc";
+
 	@Autowired
 	private Properties properties;
 
-	public void sendPhoto(long chatId,
-			String photoUrl) throws UnsupportedEncodingException {
-		TelegramClient client = new TelegramClient(properties.getBotToken())
-				.withEndpoint("/sendPhoto").withGetParameters("?chat_id=" +
-				chatId +
-				"&photo=" + URLEncoder.encode(photoUrl, "UTF-8"));
+	public void sendPhoto(long chatId, String photoUrl) throws UnsupportedEncodingException {
+		TelegramClient client = new TelegramClient(BOT_TOKEN).withEndpoint("/sendPhoto")
+				.withGetParameters("?chat_id=" +
+						chatId +
+						"&photo=" + URLEncoder.encode(photoUrl, "UTF-8"));
 
 		client.call();
 	}
 
 	public void sendLocation(long chatId, double latitude, double longitude) {
-		TelegramClient client = new TelegramClient(properties.getBotToken())
-				.withEndpoint("/sendLocation").withGetParameters("?chat_id=" +
-				chatId +
-				"&latitude=" + latitude + "&longitude=" + longitude);
+		TelegramClient client = new TelegramClient(BOT_TOKEN).withEndpoint("/sendLocation")
+				.withGetParameters("?chat_id=" +
+						chatId +
+						"&latitude=" + latitude + "&longitude=" + longitude);
 
 		client.call();
 	}
 
 	public void sendResponse(long chatId, String text) throws IOException {
-		TelegramClient client = new TelegramClient(properties.getBotToken())
-				.withEndpoint("/sendmessage").withGetParameters("?chat_id=" +
-				chatId +
-				"&text=" + URLEncoder.encode(text, "UTF-8"));
+		TelegramClient client = new TelegramClient(BOT_TOKEN).withEndpoint("/sendmessage")
+				.withGetParameters("?chat_id=" +
+						chatId +
+						"&text=" + URLEncoder.encode(text, "UTF-8"));
 
 		client.call();
 	}
 
 	public String getUpdates(Integer offset) {
-		TelegramClient client = new TelegramClient(properties.getBotToken())
-				.withEndpoint("/getupdates");
+		TelegramClient client = new TelegramClient(BOT_TOKEN).withEndpoint("/getupdates");
 		if (offset != null) {
 			client = client.withGetParameters("?offset=" + offset);
 		}
@@ -57,8 +57,8 @@ public class TelegramService {
 	}
 
 	public void setWebhook(String url) {
-		TelegramClient client = new TelegramClient(properties.getBotToken())
-				.withEndpoint("/getupdates").withGetParameters("?url=" + url);
+		TelegramClient client = new TelegramClient(BOT_TOKEN).withEndpoint("/setwebhook")
+				.withGetParameters("?url=" + url);
 
 		client.call();
 	}
