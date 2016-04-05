@@ -25,6 +25,11 @@ public class TelegramRestController {
 	@Autowired
 	private TelegramProcessor telegramProcessor;
 
+	@RequestMapping(path = "/", method = RequestMethod.GET)
+	public String abc() {
+		return "abc";
+	}
+
 	@RequestMapping(path = UPDATES_REST_PATH, method = RequestMethod.POST)
 	public Update updates(@RequestBody String messageJson) {
 		LOGGER.info("Receiving a update from Telegram {}" + messageJson);

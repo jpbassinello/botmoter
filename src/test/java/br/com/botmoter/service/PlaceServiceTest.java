@@ -5,6 +5,7 @@ import br.com.botmoter.model.Place;
 import com.google.common.base.Function;
 import com.google.common.base.Joiner;
 import com.google.common.collect.FluentIterable;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,6 +20,7 @@ public class PlaceServiceTest {
 	private static final Logger LOGGER = LoggerFactory.getLogger(PlaceServiceTest.class);
 
 	@Test
+	@Ignore
 	public void testGetPlaces() {
 		final GooglePlacesApiService placeService = new GooglePlacesApiService();
 
