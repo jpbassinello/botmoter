@@ -6,15 +6,11 @@ import org.codehaus.jackson.ObjectCodec;
 import org.codehaus.jackson.map.DeserializationContext;
 import org.codehaus.jackson.map.JsonDeserializer;
 import org.codehaus.jackson.node.IntNode;
-import org.codehaus.jackson.node.TextNode;
+import org.joda.time.LocalDateTime;
 
 import java.io.IOException;
-import java.time.Instant;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
 
-public class IntegerToLocalDateTimeDeserializer extends
-		JsonDeserializer<LocalDateTime> {
+public class IntegerToLocalDateTimeDeserializer extends JsonDeserializer<LocalDateTime> {
 
 	@Override
 	public LocalDateTime deserialize(JsonParser jsonParser,
@@ -24,8 +20,7 @@ public class IntegerToLocalDateTimeDeserializer extends
 		IntNode node = (IntNode) oc.readTree(jsonParser);
 		int dateUnix = node.getIntValue();
 
-		return LocalDateTime.ofInstant(Instant.ofEpochSecond(dateUnix), ZoneId
-				.systemDefault());
+		return new LocalDateTime(dateUnix * 1000L);
 	}
 
 }

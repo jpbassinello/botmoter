@@ -1,7 +1,5 @@
 package br.com.botmoter.telegram;
 
-import br.com.botmoter.web.bean.Properties;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
@@ -15,9 +13,6 @@ import java.net.URLEncoder;
 public class TelegramService {
 
 	private static final String BOT_TOKEN = "bot157015122:AAELqgI6HOOzmKQxuyZYu6cDX3hFnKnUmNc";
-
-	@Autowired
-	private Properties properties;
 
 	public void sendPhoto(long chatId, String photoUrl) throws UnsupportedEncodingException {
 		TelegramClient client = new TelegramClient(BOT_TOKEN).withEndpoint("/sendPhoto")

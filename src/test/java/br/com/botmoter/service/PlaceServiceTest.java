@@ -7,17 +7,16 @@ import com.google.common.base.Joiner;
 import com.google.common.collect.FluentIterable;
 import org.junit.Ignore;
 import org.junit.Test;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.util.List;
+import java.util.logging.Logger;
 
 /**
  * @author "<a href='jpbassinello@gmail.com'>João Paulo Bassinello</a>"
  */
 public class PlaceServiceTest {
 
-	private static final Logger LOGGER = LoggerFactory.getLogger(PlaceServiceTest.class);
+	private static final Logger LOGGER = Logger.getLogger(PlaceServiceTest.class.getName());
 
 	@Test
 	@Ignore

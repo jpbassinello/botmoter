@@ -9,8 +9,6 @@ import br.com.botmoter.web.controller.TelegramRestController;
 import com.google.common.base.Function;
 import com.google.common.base.Joiner;
 import com.google.common.collect.FluentIterable;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
 import org.springframework.scheduling.annotation.Async;
@@ -19,6 +17,8 @@ import org.springframework.stereotype.Component;
 import javax.annotation.PostConstruct;
 import java.io.IOException;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * @author "<a href='jpbassinello@gmail.com'>João Paulo Bassinello</a>"
@@ -27,8 +27,8 @@ import java.util.List;
 @Profile("production")
 public class ProductionTelegramAsyncProcessor implements TelegramProcessor {
 
-	private static final Logger LOGGER = LoggerFactory
-			.getLogger(ProductionTelegramAsyncProcessor.class);
+	private static final Logger LOGGER = Logger
+			.getLogger(ProductionTelegramAsyncProcessor.class.getName());
 	private static final String APP_BASE_URL = "http://localhost";
 	private final GooglePlacesApiService googlePlacesApiService = new GooglePlacesApiService();
 
@@ -43,11 +43,11 @@ public class ProductionTelegramAsyncProcessor implements TelegramProcessor {
 	@Async
 	public void processUpdate(Update update) {
 		try {
-			LOGGER.info("Start Processing update {}", update);
+			LOGGER.info("Start Processing update " + update);
 			processIt(update);
-			LOGGER.info("End Processing update {}", update);
+			LOGGER.info("End Processing update " + update);
 		} catch (Exception e) {
-			LOGGER.warn("Unexpected error while processing update {}", update, e);
+			LOGGER.log(Level.WARNING, "Unexpected error while processing update " + update, e);
 		}
 	}
 

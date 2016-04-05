@@ -1,10 +1,8 @@
 package br.com.botmoter.web.controller;
 
-import br.com.botmoter.telegram.TelegramProcessor;
+import br.com.botmoter.telegram.DevelopmentTelegramAsyncProcessor;
 import br.com.botmoter.telegram.model.Update;
 import org.codehaus.jackson.map.ObjectMapper;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -12,6 +10,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * @author "<a href='jpbassinello@gmail.com'>João Paulo Bassinello</a>"
@@ -20,10 +20,10 @@ import java.io.IOException;
 public class TelegramRestController {
 
 	public static final String UPDATES_REST_PATH = "/aokkow23SSwqQLLzqW/updates";
-	private static final Logger LOGGER = LoggerFactory.getLogger(TelegramRestController.class);
+	private static final Logger LOGGER = Logger.getLogger(TelegramRestController.class.getName());
 
 	@Autowired
-	private TelegramProcessor telegramProcessor;
+	private DevelopmentTelegramAsyncProcessor telegramProcessor;
 
 	@RequestMapping(path = "/", method = RequestMethod.GET)
 	public String abc() {
@@ -41,7 +41,7 @@ public class TelegramRestController {
 			// to be validated in Integration Test
 			return update;
 		} catch (IOException e) {
-			LOGGER.warn("Error while reading messsage from Telegram", e);
+			LOGGER.log(Level.WARNING, "Error while reading messsage from Telegram", e);
 			throw new IllegalStateException("Error while reading messsage from Telegram", e);
 		}
 	}
