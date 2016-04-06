@@ -52,7 +52,7 @@ public class TelegramService {
 	}
 
 	public void setWebhook(String url) {
-		TelegramClient client = new TelegramClient(BOT_TOKEN).withEndpoint("/setwebhook")
+		TelegramClient client = new TelegramClient(BOT_TOKEN).withEndpoint("/setWebhook")
 				.withGetParameters("?url=" + url);
 
 		client.call();

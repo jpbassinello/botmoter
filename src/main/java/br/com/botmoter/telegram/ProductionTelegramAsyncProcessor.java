@@ -37,7 +37,13 @@ public class ProductionTelegramAsyncProcessor implements TelegramProcessor {
 
 	@PostConstruct
 	public void init() {
+		LOGGER.info("=====================================================================");
+		LOGGER.info("=====================================================================");
+		LOGGER.info("Iniciando chamada para registrar o Webhook no Telegram");
 		new TelegramService().setWebhook(APP_BASE_URL + TelegramRestController.UPDATES_REST_PATH);
+		LOGGER.info("Fim da chamada para registrar o Webhook no Telegram");
+		LOGGER.info("=====================================================================");
+		LOGGER.info("=====================================================================");
 	}
 
 	@Async
