@@ -1,7 +1,7 @@
 package br.com.botmoter.service;
 
 import br.com.botmoter.model.LocationType;
-import br.com.botmoter.model.Place;
+import br.com.botmoter.model.GooglePlace;
 import com.google.common.base.Function;
 import com.google.common.base.Joiner;
 import com.google.common.collect.FluentIterable;
@@ -36,11 +36,11 @@ public class PlaceServiceTest {
 		printInSysOut(placeService.getPlaces(address, LocationType.RESTAURANTS));
 	}
 
-	private void printInSysOut(List<Place> places) {
+	private void printInSysOut(List<GooglePlace> places) {
 		LOGGER.info(Joiner.on("\n\n")
-				.join(FluentIterable.from(places).transform(new Function<Place, String>() {
+				.join(FluentIterable.from(places).transform(new Function<GooglePlace, String>() {
 					@Override
-					public String apply(Place input) {
+					public String apply(GooglePlace input) {
 						return input.toString();
 					}
 				})));

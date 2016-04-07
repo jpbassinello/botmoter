@@ -10,8 +10,8 @@ import org.springframework.stereotype.Component;
  * @author "<a href='jpbassinello@gmail.com'>João Paulo Bassinello</a>"
  */
 @Component
-//@Profile("development")
-public class DevelopmentTelegramAsyncProcessor implements TelegramProcessor {
+@Profile("development")
+public class DevelopmentTelegramProcessor implements TelegramProcessor {
 
 	public void processUpdate(Update update) {
 		// do nothing on development

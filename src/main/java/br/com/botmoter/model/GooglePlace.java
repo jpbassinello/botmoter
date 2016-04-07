@@ -1,6 +1,7 @@
 package br.com.botmoter.model;
 
 import com.google.common.collect.ComparisonChain;
+import se.walkercrou.places.Place;
 import se.walkercrou.places.Status;
 
 import java.math.BigDecimal;
@@ -9,7 +10,7 @@ import java.util.List;
 /**
  * @author "<a href='jpbassinello@gmail.com'>João Paulo Bassinello</a>"
  */
-public final class Place implements Comparable<Place> {
+public final class GooglePlace implements Comparable<GooglePlace> {
 	private final String name;
 	private final List<String> types;
 	private final String address;
@@ -23,8 +24,7 @@ public final class Place implements Comparable<Place> {
 	private final BigDecimal distanceBetweenOrigin;
 	private String imgUrl;
 
-	public Place(se.walkercrou.places.Place place, double latitudeOrigin, double longitueOrigin,
-			String apiKey) {
+	public GooglePlace(Place place, double latitudeOrigin, double longitueOrigin, String apiKey) {
 		this.name = place.getName();
 		this.types = place.getTypes();
 		this.address = place.getAddress();
@@ -142,7 +142,7 @@ public final class Place implements Comparable<Place> {
 	}
 
 	@Override
-	public int compareTo(Place o) {
+	public int compareTo(GooglePlace o) {
 		return ComparisonChain.start()
 				.compare(this.getDistanceBetweenOrigin(), o.getDistanceBetweenOrigin())
 				.compare(this.getRating(), o.getRating()).result();
