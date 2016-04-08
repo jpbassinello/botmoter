@@ -19,7 +19,7 @@ public final class ApiClient {
 	private static final String GET = "GET";
 	private final String url;
 	private final Map<String, String> parameters = new HashMap<>();
-	private final Map<String, byte[]> files = new HashMap<>();
+	private final Map<String, FormFile> files = new HashMap<>();
 	private String httpMethod;
 	private boolean multipartFormData = false;
 
@@ -36,7 +36,7 @@ public final class ApiClient {
 		return this;
 	}
 
-	public ApiClient withFiles(Map<String, byte[]> files) {
+	public ApiClient withFiles(Map<String, FormFile> files) {
 		this.files.putAll(files);
 		return this;
 	}
@@ -110,20 +110,23 @@ public final class ApiClient {
 
 	private String readResponse(HttpURLConnection connection) throws IOException {
 		final StringBuilder response = new StringBuilder();
+		BufferedReader reader = new BufferedReader(
+				new InputStreamReader(connection.getInputStream(), CHARSET));
+		String line = null;
+		while ((line = reader.readLine()) != null) {
+			response.append(line);
+		}
+		reader.close();
+		connection.disconnect();
+
 		int status = connection.getResponseCode();
 		if (status == HttpURLConnection.HTTP_OK) {
-			BufferedReader reader = new BufferedReader(
-					new InputStreamReader(connection.getInputStream(), CHARSET));
-			String line = null;
-			while ((line = reader.readLine()) != null) {
-				response.append(line);
-			}
-			reader.close();
-			connection.disconnect();
+			return response.toString();
 		} else {
-			throw new IOException("Unexpected return status from server: " + status);
+			throw new IOException(
+					"Unexpected return status (" + status + ") from server. Response: " +
+							response);
 		}
-		return response.toString();
 	}
 
 	private void addPostFormFields(final PrintWriter writer, final String boundary) {
@@ -143,13 +146,14 @@ public final class ApiClient {
 
 	private void addPostFormFiles(final PrintWriter writer, final OutputStream outputStream,
 			final String boundary) throws IOException {
-		for (Map.Entry<String, byte[]> entry : files.entrySet()) {
-			String fileName = entry.getKey();
+		for (Map.Entry<String, FormFile> entry : files.entrySet()) {
+			String paramName = entry.getKey();
+			final FormFile formFile = entry.getValue();
 			writer.append("--" + boundary);
 			writer.append(LINE_FEED);
-			writer.append("Content-Disposition: form-data; name=\"" + fileName + "\"; " +
+			writer.append("Content-Disposition: form-data; name=\"" + paramName + "\"; " +
 					"filename=\"" +
-					fileName + "\"");
+					formFile.getFileName() + "\"");
 			writer.append(LINE_FEED);
 //			writer.append("Content-Type: " + URLConnection.guessContentTypeFromName(fileName))
 //					.append(LINE_FEED);
@@ -157,7 +161,7 @@ public final class ApiClient {
 			writer.append(LINE_FEED);
 			writer.append(LINE_FEED);
 			writer.flush();
-			outputStream.write(entry.getValue());
+			outputStream.write(formFile.getBytes());
 			outputStream.flush();
 			writer.append(LINE_FEED);
 			writer.flush();

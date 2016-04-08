@@ -25,7 +25,7 @@ public class GooglePlacesApiService {
 
 	private static final String GOOGLE_KEY = "AIzaSyBU9anoKp46N76GcBh9tzN_y5u0eYABuFo";
 	private static final double DEFAULT_RADIUS = 5000D;
-	private static final int DEFAULT_NUMBER_OF_RESULTS = 50;
+	private static final int DEFAULT_NUMBER_OF_RESULTS = 60;
 
 	public List<GooglePlace> getPlaces(final double latitude, final double longitude,
 			LocationType locationType) {

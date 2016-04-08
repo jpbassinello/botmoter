@@ -1,10 +1,10 @@
 package br.com.botmoter.telegram;
 
 import br.com.botmoter.util.ApiClient;
+import br.com.botmoter.util.FormFile;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
@@ -19,37 +19,42 @@ public class TelegramService {
 	private static final Logger LOGGER = Logger.getLogger(TelegramService.class.getName());
 
 	private static final String BASE_URL = "https://api.telegram.org/";
+	// WhereabOt: 208812869:AAEVUVet1bhappvadvUa6JliK61RAum6Gcw
 	private static final String BOT_TOKEN = "bot157015122:AAELqgI6HOOzmKQxuyZYu6cDX3hFnKnUmNc";
 
-	public void sendPhoto(long chatId, String photoUrl) throws UnsupportedEncodingException {
-//		TelegramClient client = new TelegramClient(BOT_TOKEN).withEndpoint("/sendPhoto")
-//				.withGetParameters("?chat_id=" +
-//						chatId +
-//						"&photo=" + URLEncoder.encode(photoUrl, "UTF-8"));
-//
-//		client.call();
+	public void sendPhoto(long chatId, byte[] photoBytes, String caption) {
+		LOGGER.info("Calling Telegram sendPhoto");
+
+		final Map<String, String> parameters = new HashMap<>();
+		parameters.put("chat_id", String.valueOf(chatId));
+		parameters.put("caption", caption);
+
+		final Map<String, FormFile> files = new HashMap<>();
+		files.put("photo", new FormFile(System.currentTimeMillis() + ".png", photoBytes));
+
+		String response = ApiClient.build(buildTelegramUrl("/sendPhoto")).withParameters
+				(parameters)
+				.withFiles(files).postMultipartFormData().call();
+		LOGGER.info("Success Calling Telegram sendPhoto with response: " + response);
 	}
 
 	public void sendLocation(long chatId, double latitude, double longitude) {
-//		TelegramClient client = new TelegramClient(BOT_TOKEN).withEndpoint("/sendLocation")
-//				.withGetParameters("?chat_id=" +
-//						chatId +
-//						"&latitude=" + latitude + "&longitude=" + longitude);
-//
-//		client.call();
+		LOGGER.info("Calling Telegram sendLocation");
+		final Map<String, String> parameters = new HashMap<>();
+		parameters.put("chat_id", String.valueOf(chatId));
+		parameters.put("latitude", String.valueOf(latitude));
+		parameters.put("longitude", String.valueOf(longitude));
+		String response = ApiClient.build(buildTelegramUrl("/sendLocation"))
+				.withParameters(parameters).get().call();
+		LOGGER.info("Success Calling Telegram sendLocation");
 	}
 
 	public void sendResponse(long chatId, String text) throws IOException {
-//		TelegramClient client = new TelegramClient(BOT_TOKEN).withEndpoint("/sendmessage")
-//				.withGetParameters("?chat_id=" +
-//						chatId +
-//						"&text=" + URLEncoder.encode(text, "UTF-8"));
-//
-//		client.call();
 		LOGGER.info("Calling Telegram sendmessage");
 		final Map<String, String> parameters = new HashMap<>();
 		parameters.put("chat_id", String.valueOf(chatId));
 		parameters.put("text", text);
+		parameters.put("parse_mode", "HTML");
 		String response = ApiClient.build(buildTelegramUrl("/sendmessage"))
 				.withParameters(parameters).get().call();
 		LOGGER.info("Success Calling Telegram sendmessage");

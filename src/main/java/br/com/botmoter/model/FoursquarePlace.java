@@ -3,6 +3,7 @@ package br.com.botmoter.model;
 import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 /**
  * @author "<a href='jpbassinello@gmail.com'>João Paulo Bassinello</a>"
@@ -15,6 +16,8 @@ public class FoursquarePlace {
 	private String url;
 	private BigDecimal rating;
 	private String shortUrl;
+	private FoursquareLocation location;
+	private List<FoursquareCategory> categories;
 
 	public FoursquarePlace() {
 	}
@@ -57,5 +60,21 @@ public class FoursquarePlace {
 
 	public void setShortUrl(String shortUrl) {
 		this.shortUrl = shortUrl;
+	}
+
+	public FoursquareLocation getLocation() {
+		return location;
+	}
+
+	public void setLocation(FoursquareLocation location) {
+		this.location = location;
+	}
+
+	public List<FoursquareCategory> getCategories() {
+		return categories;
+	}
+
+	public void setCategories(List<FoursquareCategory> categories) {
+		this.categories = categories;
 	}
 }

@@ -45,7 +45,7 @@ public final class GooglePlace implements Comparable<GooglePlace> {
 
 			this.imgUrl = "https://maps.googleapis" +
 					".com/maps/api/place/photo?key=" + apiKey +
-					"&photoreference=" + photoReference + "&maxheight=400";
+					"&photoreference=" + photoReference + "&maxheight=150&maxwidth=150";
 		} catch (Exception e) {
 			// provavelmente não tem imagem
 		}
@@ -126,19 +126,6 @@ public final class GooglePlace implements Comparable<GooglePlace> {
 				", rating=" + rating +
 				", distanceBetweenOrigin=" + distanceBetweenOrigin +
 				'}';
-	}
-
-	public String toLine() {
-		return this.name + " (" + this.distanceBetweenOrigin.intValue() + " m)";
-	}
-
-	public String toDetail() {
-		String s = "Nome: " + this.name + "\n";
-		s += "Distância: " + this.distanceBetweenOrigin.intValue() + " m\n";
-		if (this.rating.doubleValue() > 0) {
-			s += "Rating: " + this.rating + "\n";
-		}
-		return s;
 	}
 
 	@Override
